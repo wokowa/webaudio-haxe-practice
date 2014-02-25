@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Web Audio Test Page</title>
+
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+	<p>Audio Control</p>
+	<div>
+		<label><input type="radio" name="waveType" value="SINE" placeholder="" checked="checked" />SINE</label>
+		<label><input type="radio" name="waveType" value="SQUARE" placeholder="" />SQUARE</label>
+		<label><input type="radio" name="waveType" value="SAWTOOTH" placeholder="" />SAWTOOTH</label>
+		<label><input type="radio" name="waveType" value="TRIANGLE" placeholder="" />TRIANGLE</label>
+		<label><input type="radio" name="waveType" value="CUSTOM" placeholder="" disabled="disabled" />CUSTOM</label>
+	</div>
+	<div>
+		<label for="audioFrequency">Frequency</label>
+		<input type="range" id="audioFrequency" name="audioFrequency" value="440" min="50" max="5000" placeholder="" />
+		<span id="frequencyValue"></span>
+	</div>
+	<div>
+		<label for="audioGain">Gain</label>
+		<input type="range" id="audioGain" name="audioGain" value="1" step="0.01" min="0" max="1" placeholder="" />
+		<span id="gainValue"></span>
+	</div>
+	<div>
+		<label for=""></label>
+	</div>
+	<div>
+		<input type="button" id="playAudio" name="controlAudio" value="Play" />
+		<input type="button" id="stopAudio" name="controlAudio" value="Stop" disabled="disabled" />
+	</div>
+</body>
+</html>
