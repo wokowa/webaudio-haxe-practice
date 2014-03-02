@@ -1,7 +1,5 @@
 import js.Lib;
 import js.JQuery;
-import js.d3.*;
-import js.d3.selection.*;
 import AudioTone;
 import WaveView;
 
