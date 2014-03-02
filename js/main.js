@@ -23,7 +23,12 @@ var AudioTone = function() {
 };
 AudioTone.__name__ = true;
 AudioTone.prototype = {
-	setGain: function(level) {
+	getAnalyseData: function() {
+		var data = new Uint8Array(512);
+		this.analyse.getByteTimeDomainData(data);
+		return data;
+	}
+	,setGain: function(level) {
 		if(this.gain != null) this.gain.gain.value = level;
 	}
 	,setFrequency: function(freq) {
@@ -52,8 +57,10 @@ AudioTone.prototype = {
 	}
 	,initAudio: function() {
 		this.audioctx = typeof(webkitAudioContext) != "undefined"?new webkitAudioContext():new AudioContext();
+		this.analyse = this.audioctx.createAnalyser();
 		this.gain = this.audioctx.createGain();
 		this.gain.connect(this.audioctx.destination,null,null);
+		this.gain.connect(this.analyse,null,null);
 	}
 }
 var Main = function() { }
@@ -65,7 +72,9 @@ Main.main = function() {
 }
 var PageSetup = function() {
 	this.audio = new AudioTone();
+	this.waveView = new WaveView();
 	this.initializeControls();
+	this.showWaveForm();
 };
 PageSetup.__name__ = true;
 PageSetup.prototype = {
@@ -88,6 +97,16 @@ PageSetup.prototype = {
 		this.audio.setGain(Std.parseFloat(this.gainInput.val()));
 		this.showValues();
 	}
+	,showWaveForm: function() {
+		var _g = this;
+		if(!this.freezeButton.hasClass("toggleOn")) {
+			var data = this.audio.getAnalyseData();
+			this.waveView.setData(data);
+		}
+		haxe.Timer.delay(function() {
+			_g.showWaveForm();
+		},10);
+	}
 	,showValues: function() {
 		this.freqShowValue.text(this.freqInput.val());
 		this.gainShowValue.text(this.gainInput.val());
@@ -101,6 +120,7 @@ PageSetup.prototype = {
 		this.stopButton = new js.JQuery("#stopAudio");
 		this.freqShowValue = new js.JQuery("#frequencyValue");
 		this.gainShowValue = new js.JQuery("#gainValue");
+		this.freezeButton = new js.JQuery("#waveFreeze");
 		this.typeRadio.on("change",function(e) {
 			_g.setParams();
 		});
@@ -117,6 +137,9 @@ PageSetup.prototype = {
 		this.stopButton.on("click",function(e) {
 			_g.stopAudio();
 			_g.toggelControlButton();
+		});
+		this.freezeButton.on("click",function(e) {
+			_g.freezeButton.toggleClass("toggleOn");
 		});
 		this.showValues();
 	}
@@ -151,11 +174,62 @@ Type.createEnum = function(e,constr,params) {
 	if(params != null && params.length != 0) throw "Constructor " + constr + " does not need parameters";
 	return f;
 }
+var WaveView = function() {
+	this.initializeWaveView();
+};
+WaveView.__name__ = true;
+WaveView.prototype = {
+	setData: function(dataSet) {
+		var svgObj = d3.svg.line().x(function(d,i) {
+			return i;
+		}).y(function(d,i) {
+			return d + 1;
+		}).interpolate("linear");
+		this.waveView.select("svg").selectAll("path").data([dataSet]);
+		this.polyLine.transition().duration(0).attr("d",svgObj);
+	}
+	,initializeWaveView: function() {
+		this.waveView = d3.select("#waveView");
+		this.waveView.append("svg").attr("class","wave").attr("width",512).attr("height",256);
+		this.polyLine = this.waveView.select("svg").append("path").attr("stroke","blue").attr("stroke-width",2).attr("fill","none");
+	}
+}
+var haxe = {}
+haxe.Timer = function(time_ms) {
+	var me = this;
+	this.id = setInterval(function() {
+		me.run();
+	},time_ms);
+};
+haxe.Timer.__name__ = true;
+haxe.Timer.delay = function(f,time_ms) {
+	var t = new haxe.Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+}
+haxe.Timer.prototype = {
+	run: function() {
+		console.log("run");
+	}
+	,stop: function() {
+		if(this.id == null) return;
+		clearInterval(this.id);
+		this.id = null;
+	}
+}
 var js = {}
+js.d3 = {}
+js.d3._D3 = {}
+js.d3._D3.InitPriority = function() { }
+js.d3._D3.InitPriority.__name__ = true;
 String.__name__ = true;
 Array.__name__ = true;
 var q = window.jQuery;
 js.JQuery = q;
+js.d3._D3.InitPriority.important = "important";
 Main.main();
 })();
 
