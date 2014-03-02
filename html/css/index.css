@@ -1,0 +1,50 @@
+/* line 32, ../../src/scss/index.scss */
+.viewTitle {
+  padding: 0 0.5em;
+  border-style: outset;
+  border-width: 1px;
+  border-color: rgba(102, 187, 238, 0.6);
+  -webkit-border-radius: 0.6em;
+  -moz-border-radius: 0.6em;
+  -ms-border-radius: 0.6em;
+  -o-border-radius: 0.6em;
+  border-radius: 0.6em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(102, 187, 238, 0.4)), color-stop(50%, rgba(102, 187, 238, 0.8)), color-stop(100%, #66bbee));
+  background: -webkit-linear-gradient(rgba(102, 187, 238, 0.4), rgba(102, 187, 238, 0.8), #66bbee);
+  background: -moz-linear-gradient(rgba(102, 187, 238, 0.4), rgba(102, 187, 238, 0.8), #66bbee);
+  background: -o-linear-gradient(rgba(102, 187, 238, 0.4), rgba(102, 187, 238, 0.8), #66bbee);
+  background: linear-gradient(rgba(102, 187, 238, 0.4), rgba(102, 187, 238, 0.8), #66bbee); }
+
+/* line 36, ../../src/scss/index.scss */
+.toggleButton {
+  padding: 0 0.5em;
+  border-style: outset;
+  border-width: 1px;
+  border-color: rgba(204, 204, 204, 0.6);
+  -webkit-border-radius: 0.6em;
+  -moz-border-radius: 0.6em;
+  -ms-border-radius: 0.6em;
+  -o-border-radius: 0.6em;
+  border-radius: 0.6em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(204, 204, 204, 0.4)), color-stop(50%, rgba(204, 204, 204, 0.8)), color-stop(100%, #cccccc));
+  background: -webkit-linear-gradient(rgba(204, 204, 204, 0.4), rgba(204, 204, 204, 0.8), #cccccc);
+  background: -moz-linear-gradient(rgba(204, 204, 204, 0.4), rgba(204, 204, 204, 0.8), #cccccc);
+  background: -o-linear-gradient(rgba(204, 204, 204, 0.4), rgba(204, 204, 204, 0.8), #cccccc);
+  background: linear-gradient(rgba(204, 204, 204, 0.4), rgba(204, 204, 204, 0.8), #cccccc);
+  cursor: default; }
+
+/* line 41, ../../src/scss/index.scss */
+.toggleOn {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(50%, rgba(204, 204, 204, 0.9)), color-stop(100%, rgba(204, 204, 204, 0.1)));
+  background: -webkit-linear-gradient(#cccccc, rgba(204, 204, 204, 0.9), rgba(204, 204, 204, 0.1));
+  background: -moz-linear-gradient(#cccccc, rgba(204, 204, 204, 0.9), rgba(204, 204, 204, 0.1));
+  background: -o-linear-gradient(#cccccc, rgba(204, 204, 204, 0.9), rgba(204, 204, 204, 0.1));
+  background: linear-gradient(#cccccc, rgba(204, 204, 204, 0.9), rgba(204, 204, 204, 0.1)); }
+
+/* line 53, ../../src/scss/index.scss */
+#waveView {
+  width: 512px;
+  height: 256px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black; }

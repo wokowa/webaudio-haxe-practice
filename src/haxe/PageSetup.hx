@@ -1,6 +1,9 @@
 import js.Lib;
 import js.JQuery;
+import js.d3.*;
+import js.d3.selection.*;
 import AudioTone;
+import WaveView;
 
 class PageSetup
 {
@@ -15,10 +18,17 @@ class PageSetup
 	var freqShowValue : JQuery;
 	var gainShowValue : JQuery;
 
+	var freezeButton : JQuery;
+
+	var waveView : WaveView;
+
 	public function new() {
 		audio = new AudioTone();
+		waveView = new WaveView();
 
 		initializeControls();
+
+		showWaveForm();
 	}
 
 	function initializeControls() {
@@ -30,6 +40,8 @@ class PageSetup
 
 		freqShowValue = new JQuery("#frequencyValue");
 		gainShowValue = new JQuery("#gainValue");
+
+		freezeButton = new JQuery("#waveFreeze");
 
 		typeRadio.on("change", function (e) {
 			setParams();
@@ -55,12 +67,27 @@ class PageSetup
 			toggelControlButton();
 		});
 
+		freezeButton.on("click", function(e) {
+			freezeButton.toggleClass("toggleOn");
+		});
+
 		showValues();
 	}
 
 	function showValues(): Void {
 		freqShowValue.text(freqInput.val());
 		gainShowValue.text(gainInput.val());
+	}
+
+	// Wave Form show
+	function showWaveForm(): Void {
+		if (!freezeButton.hasClass("toggleOn")) {
+			var data = audio.getAnalyseData();
+			waveView.setData(data);
+		}
+
+		// Delay Callback
+		haxe.Timer.delay(function () {showWaveForm();}, 10);
 	}
 
 	function setParams(): Void {

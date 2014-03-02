@@ -1,0 +1,61 @@
+@import "compass";
+
+$shadowOffsetX: 0.2em;
+$shadowOffsetY: 0.28em;
+$blurRadius: 0.3em;
+
+$titleSpanColor: #66BBEE;
+
+$buttonSpanColor: #CCCCCC;
+
+$viewAreaBorderColor: black;
+
+@mixin spanDefStyle($itemColor) {
+  padding: 0 0.5em;
+  border: {
+  	style: outset;
+  	width: 1px;
+  	color: rgba($itemColor, 0.6);
+  };
+  @include border-radius(0.6em);
+  @include background(
+  	linear-gradient(
+  		color-stops(
+  			rgba($itemColor, 0.4),
+  			rgba($itemColor, 0.8),
+  			$itemColor
+  		)
+  	)
+  );
+}
+
+.viewTitle {
+	@include spanDefStyle($titleSpanColor);
+}
+
+.toggleButton {
+	@include spanDefStyle($buttonSpanColor);
+	cursor: default;
+}
+
+.toggleOn {
+	@include background(
+  	linear-gradient(
+  		color-stops(
+  			$buttonSpanColor,
+  			rgba($buttonSpanColor, 0.9),
+  			rgba($buttonSpanColor, 0.1)
+  		)
+  	)
+  );
+}
+
+#waveView {
+  width: 512px;
+  height: 256px;
+  border: {
+  	style: solid;
+  	width: 1px;
+  	color: $viewAreaBorderColor;
+  }
+}

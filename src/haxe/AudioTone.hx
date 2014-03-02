@@ -1,3 +1,4 @@
+import js.html.Uint8Array;
 import js.html.audio.*;
 
 // Wave Type
@@ -18,6 +19,9 @@ class AudioTone {
 	// Gain
 	var gain : GainNode;
 
+	// Analayzer
+	var analyse : AnalyserNode;
+
 	// Constructor
 	public function new() {
 		audioctx = null;
@@ -34,9 +38,12 @@ class AudioTone {
 			new js.html.audio.AudioContext();
 		}
 
+		// Analayzer Initialize
+		analyse = audioctx.createAnalyser();
 		// GainNode Initialize
 		gain = audioctx.createGain();
 		this.gain.connect(audioctx.destination, null, null);
+		this.gain.connect(analyse, null, null);
 	}
 
 	// Create Oscillator
@@ -90,5 +97,12 @@ class AudioTone {
 		if (this.gain != null) {
 			this.gain.gain.value = level;
 		}
+	}
+
+	public function getAnalyseData(): js.html.Uint8Array {
+		var data = new js.html.Uint8Array(512);
+		this.analyse.getByteTimeDomainData(data);
+
+		return data;
 	}
 }
